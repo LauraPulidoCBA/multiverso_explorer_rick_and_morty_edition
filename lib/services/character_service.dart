@@ -3,7 +3,10 @@ import 'package:http/http.dart' as http;
 import '../models/character.dart';
 
 class CharacterService {
-  Future<List<Character>> fetchCharacters({String? status, int pages = 1}) async {
+  Future<List<Character>> fetchCharacters({
+    String? status,
+    int pages = 1,
+  }) async {
     List<Character> allCharacters = [];
 
     for (int i = 1; i <= pages; i++) {
@@ -17,9 +20,9 @@ class CharacterService {
       if (response.statusCode == 200) {
         var data = json.decode(response.body);
         List results = data["results"];
-        allCharacters.addAll(
-          results.map((c) => Character.fromMap(c)).toList(),
-        );
+        allCharacters.addAll(results.map((c) => Character.fromMap(c)).toList());
+      } else {
+        throw Exception("Error al cargar personajes");
       }
     }
 
