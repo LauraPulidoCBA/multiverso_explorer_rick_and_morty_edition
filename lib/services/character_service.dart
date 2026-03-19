@@ -17,6 +17,9 @@ class CharacterService {
       if (response.statusCode == 200) {
         var data = json.decode(response.body);
         List results = data["results"];
+        allCharacters.addAll(
+          results.map((c) => Character.fromMap(c)).toList(),
+        );
       }
     }
 
