@@ -8,7 +8,9 @@ class CharacterService {
 
     for (int i = 1; i <= pages; i++) {
       String urlString = "https://rickandmortyapi.com/api/character?page=$i";
-
+      if (status != null && status != "all") {
+        urlString += "&status=$status";
+      }
       var url = Uri.parse(urlString);
       var response = await http.get(url);
 
