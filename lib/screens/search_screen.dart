@@ -34,8 +34,70 @@ class _SearchScreenState extends State<SearchScreen> {
       return Scaffold(
       appBar: AppBar(title: const Text("Explorar personajes")),
 
+body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.indigo, Colors.teal],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+        ),
+        child: Column(
+          children: [
+            DropdownButton<String>(
+              value: filter,
+              hint: const Text("Filtrar por estado"),
+              items: const [
+                DropdownMenuItem(value: "all", child: Text("Todos")),
+                DropdownMenuItem(value: "alive", child: Text("Vivo")),
+                DropdownMenuItem(value: "dead", child: Text("Muerto")),
+                DropdownMenuItem(value: "unknown", child: Text("Desconocido")),
+              ],
+              onChanged: (value) {
+                setState(() {
+                  filter = value;
+                });
+                _loadCharacters();
+              },
+            ),
+            Expanded(
+              child: GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 5,
+                  childAspectRatio: 0.8,
+                ),
+                itemCount: characters.length,
+                itemBuilder: (context, index) {
+                  final character = characters[index];
+                  final isFav = provider.favourites.any((c) => c.id == character.id);
+
+                  return Card(
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child: Image.network(character.image, fit: BoxFit.cover),
+                        ),
+                        Text(character.name),
+                        Text("Estado: ${character.status}"),
+                        IconButton(
+                          icon: Icon(
+                            isFav ? Icons.favorite : Icons.favorite_border,
+                            color: Colors.red,
+                          ),
+                          onPressed: () => provider.toggleFavourite(character),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
 
 
 
-
-      final isFav = provider.favourites.any((c) => c.id == character.id);
