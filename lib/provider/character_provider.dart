@@ -19,3 +19,13 @@ Future<void> _saveToDisk() async {
   final data = json.encode(_favourites.map((c) => c.toMap()).toList());
   await prefs.setString('favourites', data);
 }
+Future<void> _loadFromDisk() async {
+  final prefs = await SharedPreferences.getInstance();
+  final data = prefs.getString('favourites');
+
+  if (data != null) {
+    final decoded = json.decode(data) as List;
+    _favourites = decoded.map((m) => Character.fromMap(m)).toList();
+    notifyListeners();
+  }
+}
