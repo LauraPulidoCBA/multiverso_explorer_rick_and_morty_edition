@@ -13,3 +13,9 @@ void toggleFavourite(Character character) {
 
   notifyListeners();
 }
+
+Future<void> _saveToDisk() async {
+  final prefs = await SharedPreferences.getInstance();
+  final data = json.encode(_favourites.map((c) => c.toMap()).toList());
+  await prefs.setString('favourites', data);
+}
