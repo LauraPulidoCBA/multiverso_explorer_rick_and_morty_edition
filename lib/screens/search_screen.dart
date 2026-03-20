@@ -26,3 +26,16 @@ class _SearchScreenState extends State<SearchScreen> {
     characters = await service.fetchCharacters(status: filter, pages: 1);
     setState(() {});
   }
+
+  @override
+  Widget build(BuildContext context) {
+    final provider = Provider.of<CharacterProvider>(context);
+
+      return Scaffold(
+      appBar: AppBar(title: const Text("Explorar personajes")),
+
+
+
+
+
+      final isFav = provider.favourites.any((c) => c.id == character.id);
