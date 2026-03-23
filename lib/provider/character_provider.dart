@@ -1,3 +1,4 @@
+
 class CharacterProvider extends ChangeNotifier {
   List<Character> _favourites = [];
   List<Character> get favourites => _favourites;
@@ -29,3 +30,7 @@ Future<void> _loadFromDisk() async {
     notifyListeners();
   }
 }
+import 'package:flutter/material.dart';
+
+class CharacterProvider extends ChangeNotifier {}
+
